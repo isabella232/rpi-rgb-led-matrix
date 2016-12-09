@@ -120,7 +120,7 @@ private:
         printf("image valid");
         current_image_.Delete();
         current_image_ = new_image_;
-        // new_image_.Reset();
+        new_image_.Reset();
       } else {
         printf("image invalid");
       }
