@@ -309,6 +309,7 @@ int main(int argc, char *argv[]) {
         matrix->SetPixel(x + 33, y, 0, 0, 0);
       }
     }
+    printf("%s\n", "clearing");
   }
   if(strncmp(walle , "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
