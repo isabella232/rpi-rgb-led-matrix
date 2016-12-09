@@ -286,8 +286,8 @@ int main(int argc, char *argv[]) {
   }
 
   // Stop image generating thread. The delete triggers
-  delete image_gen;
-  delete canvas;
+  // delete image_gen;
+  // delete canvas;
 
   printf("\%s. Exiting.\n",
          interrupt_received ? "Received CTRL-C" : "Timeout reached");
