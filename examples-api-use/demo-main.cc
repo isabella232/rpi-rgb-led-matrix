@@ -107,6 +107,7 @@ public:
     LoadPPM("bender-2.ppm");
     Draw(97);
     offscreen_ = matrix_->SwapOnVSync(offscreen_);
+    matrix_->SetPixel(0,0,255,255,255);
   }
 
 private:
