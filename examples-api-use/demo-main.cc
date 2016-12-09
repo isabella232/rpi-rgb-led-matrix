@@ -101,6 +101,7 @@ public:
     const int screen_height = offscreen_->height();
     const int screen_width = offscreen_->width();
     // while (running() && !interrupt_received) {
+    LoadPPM("optimus.ppm");
       {
         MutexLock l(&mutex_new_image_);
         if (new_image_.IsValid()) {
@@ -255,8 +256,6 @@ int main(int argc, char *argv[]) {
   // the matrix continuously.
   ThreadedCanvasManipulator *image_gen = NULL;
   ImageScroller *scroller = new ImageScroller(matrix, 0, -1);
-  if (!scroller->LoadPPM("optimus.ppm"))
-    return 1;
   image_gen = scroller;
 
   if (image_gen == NULL)
