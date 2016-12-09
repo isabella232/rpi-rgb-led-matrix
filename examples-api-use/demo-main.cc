@@ -98,9 +98,6 @@ public:
   }
 
   void Run() {
-    const int screen_height = offscreen_->height();
-    const int screen_width = offscreen_->width();
-    // while (running() && !interrupt_received) {
     LoadPPM("optimus.ppm");
     Draw(0);
     Draw(33);
@@ -108,6 +105,9 @@ public:
 
 private:
   void Draw(int start_position) {
+    const int screen_height = offscreen_->height();
+    const int screen_width = offscreen_->width();
+
     {
       MutexLock l(&mutex_new_image_);
       if (new_image_.IsValid()) {
