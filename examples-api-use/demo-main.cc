@@ -102,37 +102,41 @@ public:
     const int screen_width = offscreen_->width();
     // while (running() && !interrupt_received) {
     LoadPPM("optimus.ppm");
-      {
-        MutexLock l(&mutex_new_image_);
-        if (new_image_.IsValid()) {
-          current_image_.Delete();
-          current_image_ = new_image_;
-          new_image_.Reset();
-        }
-      }
-      // if (!current_image_.IsValid()) {
-      //   usleep(100 * 1000);
-      //   continue;
-      // }
-      for (int x = 0; x < screen_width; ++x) {
-        for (int y = 0; y < screen_height; ++y) {
-          const Pixel &p = current_image_.getPixel(x, y);
-          offscreen_->SetPixel(x + scroll_jumps_, y, p.red, p.green, p.blue);
-        }
-      }
-      offscreen_ = matrix_->SwapOnVSync(offscreen_);
-      // horizontal_position_ += scroll_jumps_;
-      // if (horizontal_position_ < 0) horizontal_position_ = current_image_.width;
-      // if (scroll_ms_ <= 0) {
-      //   // No scrolling. We don't need the image anymore.
-      //   current_image_.Delete();
-      // } else {
-        // usleep(10 * 1000);
-      // }
-    // }
+    Draw(0);
+    Draw(33);
   }
 
 private:
+  void Draw(int start_position) {
+    {
+      MutexLock l(&mutex_new_image_);
+      if (new_image_.IsValid()) {
+        current_image_.Delete();
+        current_image_ = new_image_;
+        new_image_.Reset();
+      }
+    }
+    // if (!current_image_.IsValid()) {
+    //   usleep(100 * 1000);
+    //   continue;
+    // }
+    for (int x = 0; x < screen_width; ++x) {
+      for (int y = 0; y < screen_height; ++y) {
+        const Pixel &p = current_image_.getPixel(x, y);
+        offscreen_->SetPixel(x + start_position, y, p.red, p.green, p.blue);
+      }
+    }
+    offscreen_ = matrix_->SwapOnVSync(offscreen_);
+    // horizontal_position_ += scroll_jumps_;
+    // if (horizontal_position_ < 0) horizontal_position_ = current_image_.width;
+    // if (scroll_ms_ <= 0) {
+    //   // No scrolling. We don't need the image anymore.
+    //   current_image_.Delete();
+    // } else {
+      // usleep(10 * 1000);
+    // }
+  // }
+  }
   struct Pixel {
     Pixel() : red(0), green(0), blue(0){}
     uint8_t red;
