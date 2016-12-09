@@ -103,13 +103,13 @@ public:
   }
 
   void Run() {
-    LoadPPM("eve.ppm");
+    LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/eve.ppm");
     Draw(0);
-    LoadPPM("optimus.ppm");
+    LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/optimus.ppm");
     Draw(33);
-    LoadPPM("walle.ppm");
+    LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/walle.ppm");
     Draw(65);
-    LoadPPM("bender.ppm");
+    LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/bender.ppm");
     Draw(97);
     offscreen_ = matrix_->SwapOnVSync(offscreen_);
     if(strncmp(eve, "0", 1) == 0) {
