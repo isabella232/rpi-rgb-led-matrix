@@ -295,6 +295,8 @@ int main(int argc, char *argv[]) {
   // Image generating demo is crated. Now start the thread.
   image_gen->Start();
 
+  printf("%s\n", *eve);
+
   if(*eve == '0') {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
