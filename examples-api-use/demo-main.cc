@@ -101,14 +101,14 @@ public:
     const int screen_height = offscreen_->height();
     const int screen_width = offscreen_->width();
     // while (running() && !interrupt_received) {
-      // {
-      //   MutexLock l(&mutex_new_image_);
-      //   if (new_image_.IsValid()) {
-      //     current_image_.Delete();
-      //     current_image_ = new_image_;
-      //     new_image_.Reset();
-      //   }
-      // }
+      {
+        MutexLock l(&mutex_new_image_);
+        if (new_image_.IsValid()) {
+          current_image_.Delete();
+          current_image_ = new_image_;
+          new_image_.Reset();
+        }
+      }
       // if (!current_image_.IsValid()) {
       //   usleep(100 * 1000);
       //   continue;
