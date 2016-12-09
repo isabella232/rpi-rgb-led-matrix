@@ -275,7 +275,7 @@ int main(int argc, char *argv[]) {
   printf("Size: %dx%d. Hardware gpio mapping: %s\n",
          matrix->width(), matrix->height(), matrix_options.hardware_mapping);
 
-  Canvas *canvas = matrix;
+  // Canvas *canvas = matrix;
 
   // The ThreadedCanvasManipulator objects are filling
   // the matrix continuously.
@@ -295,34 +295,34 @@ int main(int argc, char *argv[]) {
   // Image generating demo is crated. Now start the thread.
   image_gen->Start();
 
-  // if(eve == '0') {
-  //   for (int x = 0; x < 32; ++x) {
-  //     for (int y = 0; y < 16; ++y) {
-  //       matrix->SetPixel(x + 0, y, 0, 0, 0);
-  //     }
-  //   }
-  // }
-  // if(optimus == '0') {
-  //   for (int x = 0; x < 32; ++x) {
-  //     for (int y = 0; y < 16; ++y) {
-  //       matrix->SetPixel(x + 33, y, 0, 0, 0);
-  //     }
-  //   }
-  // }
-  // if(walle == '0') {
-  //   for (int x = 0; x < 32; ++x) {
-  //     for (int y = 0; y < 16; ++y) {
-  //       matrix->SetPixel(x + 65, y, 0, 0, 0);
-  //     }
-  //   }
-  // }
-  // if(bender == '0') {
-  //   for (int x = 0; x < 32; ++x) {
-  //     for (int y = 0; y < 16; ++y) {
-  //       matrix->SetPixel(x + 97, y, 0, 0, 0);
-  //     }
-  //   }
-  // }
+  if(*eve == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 0, y, 0, 0, 0);
+      }
+    }
+  }
+  if(*optimus == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 33, y, 0, 0, 0);
+      }
+    }
+  }
+  if(*walle == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 65, y, 0, 0, 0);
+      }
+    }
+  }
+  if(*bender == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 97, y, 0, 0, 0);
+      }
+    }
+  }
 
   // Now, the image generation runs in the background. We can do arbitrary
   // things here in parallel. In this demo, we're essentially just
