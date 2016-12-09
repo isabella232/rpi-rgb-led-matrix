@@ -116,11 +116,14 @@ private:
 
     {
       // MutexLock l(&mutex_new_image_);
-      // if (new_image_.IsValid()) {
+      if (new_image_.IsValid()) {
+        printf("image valid");
         current_image_.Delete();
         current_image_ = new_image_;
         // new_image_.Reset();
-      // }
+      } else {
+        printf("image invalid");
+      }
     }
     // if (!current_image_.IsValid()) {
     //   usleep(100 * 1000);
