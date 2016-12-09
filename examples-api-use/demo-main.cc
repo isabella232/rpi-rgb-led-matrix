@@ -101,6 +101,7 @@ public:
     LoadPPM("optimus.ppm");
     Draw(0);
     Draw(33);
+    offscreen_ = matrix_->SwapOnVSync(offscreen_);
   }
 
 private:
@@ -126,7 +127,6 @@ private:
         offscreen_->SetPixel(x + start_position, y, p.red, p.green, p.blue);
       }
     }
-    offscreen_ = matrix_->SwapOnVSync(offscreen_);
     // horizontal_position_ += scroll_jumps_;
     // if (horizontal_position_ < 0) horizontal_position_ = current_image_.width;
     // if (scroll_ms_ <= 0) {
