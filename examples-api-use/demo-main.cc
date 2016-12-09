@@ -228,6 +228,10 @@ int main(int argc, char *argv[]) {
   matrix_options.chain_length = 1;
   matrix_options.parallel = 1;
 
+  if (!ParseOptionsFromFlags(&argc, &argv, &matrix_options, &runtime_opt)) {
+    return usage(argv[0]);
+  }
+
   RGBMatrix *matrix = CreateMatrixFromOptions(matrix_options, runtime_opt);
   if (matrix == NULL)
     return 1;
