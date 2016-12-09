@@ -261,7 +261,7 @@ static int usage(const char *progname) {
 
 
 int main(int argc, char *argv[]) {
-  int runtime_seconds = 930;
+  int runtime_seconds = 35;
   int rotation = 0;
   bool large_display = false;
 
