@@ -89,7 +89,7 @@ public:
     fprintf(stderr, "Read image '%s' with %dx%d\n", filename,
             new_width, new_height);
     horizontal_position_ = 0;
-    MutexLock l(&mutex_new_image_);
+    // MutexLock l(&mutex_new_image_);
     new_image_.Delete();  // in case we reload faster than is picked up
     new_image_.image = new_image;
     new_image_.width = new_width;
@@ -115,7 +115,7 @@ private:
     const int screen_width = offscreen_->width();
 
     {
-      MutexLock l(&mutex_new_image_);
+      // MutexLock l(&mutex_new_image_);
       if (new_image_.IsValid()) {
         current_image_.Delete();
         current_image_ = new_image_;
