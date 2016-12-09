@@ -100,36 +100,35 @@ public:
   void Run() {
     const int screen_height = offscreen_->height();
     const int screen_width = offscreen_->width();
-    while (running() && !interrupt_received) {
-      {
-        MutexLock l(&mutex_new_image_);
-        if (new_image_.IsValid()) {
-          current_image_.Delete();
-          current_image_ = new_image_;
-          new_image_.Reset();
-        }
-      }
-      if (!current_image_.IsValid()) {
-        usleep(100 * 1000);
-        continue;
-      }
+    // while (running() && !interrupt_received) {
+      // {
+      //   MutexLock l(&mutex_new_image_);
+      //   if (new_image_.IsValid()) {
+      //     current_image_.Delete();
+      //     current_image_ = new_image_;
+      //     new_image_.Reset();
+      //   }
+      // }
+      // if (!current_image_.IsValid()) {
+      //   usleep(100 * 1000);
+      //   continue;
+      // }
       for (int x = 0; x < screen_width; ++x) {
         for (int y = 0; y < screen_height; ++y) {
-          const Pixel &p = current_image_.getPixel(
-            (horizontal_position_ + x) % current_image_.width, y);
+          const Pixel &p = current_image_.getPixel(x, y);
           offscreen_->SetPixel(x, y, p.red, p.green, p.blue);
         }
       }
       offscreen_ = matrix_->SwapOnVSync(offscreen_);
-      horizontal_position_ += scroll_jumps_;
-      if (horizontal_position_ < 0) horizontal_position_ = current_image_.width;
-      if (scroll_ms_ <= 0) {
-        // No scrolling. We don't need the image anymore.
-        current_image_.Delete();
-      } else {
-        usleep(scroll_ms_ * 1000);
-      }
-    }
+      // horizontal_position_ += scroll_jumps_;
+      // if (horizontal_position_ < 0) horizontal_position_ = current_image_.width;
+      // if (scroll_ms_ <= 0) {
+      //   // No scrolling. We don't need the image anymore.
+      //   current_image_.Delete();
+      // } else {
+        // usleep(10 * 1000);
+      // }
+    // }
   }
 
 private:
