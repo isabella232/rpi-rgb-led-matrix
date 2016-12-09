@@ -269,8 +269,8 @@ int main(int argc, char *argv[]) {
     demo_parameter = argv[optind];
   }
   std::vector<std::string> x = split(demo_parameter, ',');
-  printf("%d\n", x.at(0));
-  printf("%d\n", x.at(1));
+  printf("%s\n", x.at(0));
+  printf("%s\n", x.at(1));
 
   RGBMatrix *matrix = CreateMatrixFromOptions(matrix_options, runtime_opt);
   if (matrix == NULL)
