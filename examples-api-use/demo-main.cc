@@ -38,8 +38,8 @@ class ImageScroller : public ThreadedCanvasManipulator {
 public:
   // Scroll image with "scroll_jumps" pixels every "scroll_ms" milliseconds.
   // If "scroll_ms" is negative, don't do any scrolling.
-  ImageScroller(RGBMatrix *m, int scroll_jumps, int scroll_ms = 30)
-    : ThreadedCanvasManipulator(m), scroll_jumps_(scroll_jumps),
+  ImageScroller(RGBMatrix *m, int start_position, int scroll_ms = 30)
+    : ThreadedCanvasManipulator(m), scroll_jumps_(1),
       scroll_ms_(scroll_ms),
       horizontal_position_(0),
       matrix_(m) {
@@ -116,7 +116,7 @@ public:
       for (int x = 0; x < screen_width; ++x) {
         for (int y = 0; y < screen_height; ++y) {
           const Pixel &p = current_image_.getPixel(x, y);
-          offscreen_->SetPixel(x, y, p.red, p.green, p.blue);
+          offscreen_->SetPixel(x + start_position, y, p.red, p.green, p.blue);
         }
       }
       offscreen_ = matrix_->SwapOnVSync(offscreen_);
@@ -254,7 +254,7 @@ int main(int argc, char *argv[]) {
   // The ThreadedCanvasManipulator objects are filling
   // the matrix continuously.
   ThreadedCanvasManipulator *image_gen = NULL;
-  ImageScroller *scroller = new ImageScroller(matrix, 1, -1);
+  ImageScroller *scroller = new ImageScroller(matrix, 0, -1);
   if (!scroller->LoadPPM("optimus.ppm"))
     return 1;
   image_gen = scroller;
