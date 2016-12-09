@@ -100,7 +100,12 @@ public:
   void Run() {
     LoadPPM("optimus.ppm");
     Draw(0);
+    LoadPPM("eve.ppm");
     Draw(33);
+    LoadPPM("walle.ppm");
+    Draw(65);
+    LoadPPM("bender-2.ppm");
+    Draw(97);
     offscreen_ = matrix_->SwapOnVSync(offscreen_);
   }
 
