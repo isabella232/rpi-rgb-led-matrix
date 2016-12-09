@@ -118,12 +118,10 @@ private:
     {
       // MutexLock l(&mutex_new_image_);
       if (new_image_.IsValid()) {
-        printf("image valid");
         current_image_.Delete();
         current_image_ = new_image_;
         new_image_.Reset();
       } else {
-        printf("image invalid");
       }
     }
     // if (!current_image_.IsValid()) {
@@ -296,6 +294,7 @@ int main(int argc, char *argv[]) {
   // Image generating demo is crated. Now start the thread.
   image_gen->Start();
 
+  printf("%d\n", strncmp(eve, "0", 1));
   if(strncmp(eve, "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
