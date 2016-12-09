@@ -98,9 +98,9 @@ public:
   }
 
   void Run() {
-    LoadPPM("optimus.ppm");
-    Draw(0);
     LoadPPM("eve.ppm");
+    Draw(0);
+    LoadPPM("optimus.ppm");
     Draw(33);
     LoadPPM("walle.ppm");
     Draw(65);
