@@ -295,6 +295,7 @@ int main(int argc, char *argv[]) {
   image_gen->Start();
 
   printf("%d\n", strncmp(eve, "0", 1));
+  printf("%d\n", strncmp(optimus, "0", 1));
   if(strncmp(eve, "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
