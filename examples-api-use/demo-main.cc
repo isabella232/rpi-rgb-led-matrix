@@ -90,7 +90,7 @@ public:
             new_width, new_height);
     horizontal_position_ = 0;
     MutexLock l(&mutex_new_image_);
-    new_image_.Delete();  // in case we reload faster than is picked up
+    // new_image_.Delete();  // in case we reload faster than is picked up
     new_image_.image = new_image;
     new_image_.width = new_width;
     new_image_.height = new_height;
@@ -216,7 +216,7 @@ static int usage(const char *progname) {
 }
 
 int main(int argc, char *argv[]) {
-  int runtime_seconds = -1;
+  int runtime_seconds = 1;
   int rotation = 0;
   bool large_display = false;
 
