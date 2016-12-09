@@ -20,6 +20,25 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <string>
+#include <sstream>
+#include <vector>
+
+void split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss;
+    ss.str(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+}
+
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, elems);
+    return elems;
+}
 
 using std::min;
 using std::max;
@@ -249,7 +268,9 @@ int main(int argc, char *argv[]) {
   if (optind < argc) {
     demo_parameter = argv[optind];
   }
-  printf("%s\n", demo_parameter);
+  std::vector<std::string> x = split(demo_parameter, ',');
+  printf("%d\n", x.at(0));
+  printf("%d\n", x.at(1));
 
   RGBMatrix *matrix = CreateMatrixFromOptions(matrix_options, runtime_opt);
   if (matrix == NULL)
