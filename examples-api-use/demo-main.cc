@@ -31,6 +31,10 @@ using std::max;
 using namespace rgb_matrix;
 
 volatile bool interrupt_received = false;
+const char *eve = NULL;
+const char *walle = NULL;
+const char *bender = NULL;
+const char *optimus = NULL;
 static void InterruptHandler(int signo) {
   interrupt_received = true;
 }
@@ -108,6 +112,34 @@ public:
     LoadPPM("bender.ppm");
     Draw(97);
     offscreen_ = matrix_->SwapOnVSync(offscreen_);
+    if(strncmp(eve, "0", 1) == 0) {
+      for (int x = 0; x < 32; ++x) {
+        for (int y = 0; y < 16; ++y) {
+          matrix_->SetPixel(x + 0, y, 0, 0, 0);
+        }
+      }
+    }
+    if(strncmp(optimus, "0", 1) == 0) {
+      for (int x = 0; x < 32; ++x) {
+        for (int y = 0; y < 16; ++y) {
+          matrix_->SetPixel(x + 33, y, 0, 0, 0);
+        }
+      }
+    }
+    if(strncmp(walle , "0", 1) == 0) {
+      for (int x = 0; x < 32; ++x) {
+        for (int y = 0; y < 16; ++y) {
+          matrix_->SetPixel(x + 65, y, 0, 0, 0);
+        }
+      }
+    }
+    if(strncmp(bender , "0", 1) == 0) {
+      for (int x = 0; x < 32; ++x) {
+        for (int y = 0; y < 16; ++y) {
+          matrix_->SetPixel(x + 97, y, 0, 0, 0);
+        }
+      }
+    }
   }
 
 private:
@@ -232,10 +264,6 @@ int main(int argc, char *argv[]) {
   int runtime_seconds = 930;
   int rotation = 0;
   bool large_display = false;
-  const char *eve = NULL;
-  const char *walle = NULL;
-  const char *bender = NULL;
-  const char *optimus = NULL;
 
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
@@ -294,37 +322,6 @@ int main(int argc, char *argv[]) {
   // Image generating demo is crated. Now start the thread.
   image_gen->Start();
 
-  printf("%d\n", strncmp(eve, "0", 1));
-  printf("%d\n", strncmp(optimus, "0", 1));
-  if(strncmp(eve, "0", 1) == 0) {
-    for (int x = 0; x < 32; ++x) {
-      for (int y = 0; y < 16; ++y) {
-        matrix->SetPixel(x + 0, y, 0, 0, 0);
-      }
-    }
-  }
-  if(strncmp(optimus, "0", 1) == 0) {
-    for (int x = 0; x < 32; ++x) {
-      for (int y = 0; y < 16; ++y) {
-        matrix->SetPixel(x + 33, y, 0, 0, 0);
-      }
-    }
-    printf("%s\n", "clearing");
-  }
-  if(strncmp(walle , "0", 1) == 0) {
-    for (int x = 0; x < 32; ++x) {
-      for (int y = 0; y < 16; ++y) {
-        matrix->SetPixel(x + 65, y, 0, 0, 0);
-      }
-    }
-  }
-  if(strncmp(bender , "0", 1) == 0) {
-    for (int x = 0; x < 32; ++x) {
-      for (int y = 0; y < 16; ++y) {
-        matrix->SetPixel(x + 97, y, 0, 0, 0);
-      }
-    }
-  }
 
   // Now, the image generation runs in the background. We can do arbitrary
   // things here in parallel. In this demo, we're essentially just
