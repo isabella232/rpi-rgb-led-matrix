@@ -107,18 +107,9 @@ public:
     LoadPPM("bender.ppm");
     Draw(97);
     offscreen_ = matrix_->SwapOnVSync(offscreen_);
-    Clear(3 * 32);
   }
 
 private:
-  void Clear(int offset) {
-    for (int x = 0; x < 32; ++x) {
-      for (int y = 0; y < 16; ++y) {
-        matrix_->SetPixel(x + offset, y, 0, 0, 0);
-      }
-    }
-  }
-
   void Draw(int start_position) {
     const int screen_height = offscreen_->height();
     const int screen_width = offscreen_->width();
@@ -236,14 +227,16 @@ static int usage(const char *progname) {
   return 1;
 }
 
+
+
 int main(int argc, char *argv[]) {
   int runtime_seconds = 30;
   int rotation = 0;
   bool large_display = false;
-  const char *eve = NULL;
-  const char *walle = NULL;
-  const char *bender = NULL;
-  const char *optimus = NULL;
+  char eve = '0';
+  char walle = '0';
+  char bender = '0';
+  char optimus = '0';
 
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
@@ -263,11 +256,6 @@ int main(int argc, char *argv[]) {
     walle = argv[optind + 2];
     bender = argv[optind + 3];
   }
-
-  printf("%s\n", eve);
-  printf("%s\n", optimus);
-  printf("%s\n", walle);
-  printf("%s\n", bender);
 
   RGBMatrix *matrix = CreateMatrixFromOptions(matrix_options, runtime_opt);
   if (matrix == NULL)
@@ -306,6 +294,35 @@ int main(int argc, char *argv[]) {
 
   // Image generating demo is crated. Now start the thread.
   image_gen->Start();
+
+  if(eve == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 0, y, 0, 0, 0);
+      }
+    }
+  }
+  if(optimus == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 33, y, 0, 0, 0);
+      }
+    }
+  }
+  if(walle == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 65, y, 0, 0, 0);
+      }
+    }
+  }
+  if(bender == '0') {
+    for (int x = 0; x < 32; ++x) {
+      for (int y = 0; y < 16; ++y) {
+        matrix->SetPixel(x + 97, y, 0, 0, 0);
+      }
+    }
+  }
 
   // Now, the image generation runs in the background. We can do arbitrary
   // things here in parallel. In this demo, we're essentially just
