@@ -9,6 +9,7 @@
 #include "threaded-canvas-manipulator.h"
 #include "transformer.h"
 #include "graphics.h"
+#include <string.h>
 
 #include <assert.h>
 #include <getopt.h>
@@ -295,30 +296,28 @@ int main(int argc, char *argv[]) {
   // Image generating demo is crated. Now start the thread.
   image_gen->Start();
 
-  printf("%s\n", eve);
-
-  if(*eve == '0') {
+  if(strncmp(eve, "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
         matrix->SetPixel(x + 0, y, 0, 0, 0);
       }
     }
   }
-  if(*optimus == '0') {
+  if(strncmp(optimus, "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
         matrix->SetPixel(x + 33, y, 0, 0, 0);
       }
     }
   }
-  if(*walle == '0') {
+  if(strncmp(walle , "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
         matrix->SetPixel(x + 65, y, 0, 0, 0);
       }
     }
   }
-  if(*bender == '0') {
+  if(strncmp(bender , "0", 1) == 0) {
     for (int x = 0; x < 32; ++x) {
       for (int y = 0; y < 16; ++y) {
         matrix->SetPixel(x + 97, y, 0, 0, 0);
