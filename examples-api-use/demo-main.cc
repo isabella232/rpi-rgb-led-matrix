@@ -39,7 +39,7 @@ public:
   // Scroll image with "scroll_jumps" pixels every "scroll_ms" milliseconds.
   // If "scroll_ms" is negative, don't do any scrolling.
   ImageScroller(RGBMatrix *m, int scroll_jumps, int scroll_ms = 30)
-    : ThreadedCanvasManipulator(m), scroll_jumps_(1),
+    : ThreadedCanvasManipulator(m), scroll_jumps_(scroll_jumps),
       scroll_ms_(scroll_ms),
       horizontal_position_(0),
       matrix_(m) {
@@ -116,7 +116,7 @@ public:
       for (int x = 0; x < screen_width; ++x) {
         for (int y = 0; y < screen_height; ++y) {
           const Pixel &p = current_image_.getPixel(x, y);
-          offscreen_->SetPixel(x + scroll_jumps, y, p.red, p.green, p.blue);
+          offscreen_->SetPixel(x + scroll_jumps_, y, p.red, p.green, p.blue);
         }
       }
       offscreen_ = matrix_->SwapOnVSync(offscreen_);
