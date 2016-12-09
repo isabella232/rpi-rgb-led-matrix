@@ -233,10 +233,10 @@ int main(int argc, char *argv[]) {
   int runtime_seconds = 30;
   int rotation = 0;
   bool large_display = false;
-  char eve = '0';
-  char walle = '0';
-  char bender = '0';
-  char optimus = '0';
+  const char *eve = NULL;
+  const char *walle = NULL;
+  const char *bender = NULL;
+  const char *optimus = NULL;
 
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
