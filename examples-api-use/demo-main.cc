@@ -232,6 +232,7 @@ int main(int argc, char *argv[]) {
   int runtime_seconds = 30;
   int rotation = 0;
   bool large_display = false;
+  const char *demo_parameter = NULL;
 
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
@@ -244,6 +245,11 @@ int main(int argc, char *argv[]) {
   if (!ParseOptionsFromFlags(&argc, &argv, &matrix_options, &runtime_opt)) {
     return usage(argv[0]);
   }
+
+  if (optind < argc) {
+    demo_parameter = argv[optind];
+  }
+  printf("%s\n", demo_parameter);
 
   RGBMatrix *matrix = CreateMatrixFromOptions(matrix_options, runtime_opt);
   if (matrix == NULL)
