@@ -20,25 +20,6 @@
 #include <unistd.h>
 
 #include <algorithm>
-#include <string>
-#include <sstream>
-#include <vector>
-
-void split(const std::string &s, char delim, std::vector<std::string> &elems) {
-    std::stringstream ss;
-    ss.str(s);
-    std::string item;
-    while (std::getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
-}
-
-
-std::vector<std::string> split(const std::string &s, char delim) {
-    std::vector<std::string> elems;
-    split(s, delim, elems);
-    return elems;
-}
 
 using std::min;
 using std::max;
@@ -251,7 +232,10 @@ int main(int argc, char *argv[]) {
   int runtime_seconds = 30;
   int rotation = 0;
   bool large_display = false;
-  const char *demo_parameter = NULL;
+  const char *eve = NULL;
+  const char *walle = NULL;
+  const char *bender = NULL;
+  const char *optimus = NULL;
 
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
@@ -266,11 +250,16 @@ int main(int argc, char *argv[]) {
   }
 
   if (optind < argc) {
-    demo_parameter = argv[optind];
+    eve = argv[optind];
+    optimus = argv[optind + 1];
+    walle = argv[optind + 2];
+    bender = argv[optind + 3];
   }
-  std::vector<std::string> x = split(demo_parameter, ',');
-  printf("%s\n", x.at(0));
-  printf("%s\n", x.at(1));
+
+  printf("%s\n", eve);
+  printf("%s\n", optimus);
+  printf("%s\n", walle);
+  printf("%s\n", bender);
 
   RGBMatrix *matrix = CreateMatrixFromOptions(matrix_options, runtime_opt);
   if (matrix == NULL)
