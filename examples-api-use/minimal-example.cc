@@ -149,19 +149,23 @@ int main(int argc, char *argv[]) {
   };
 
   fprintf(stderr, "Opening file\n");
-  std::ifstream infile ("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
+  std::ifstream infile;
+  infile.open("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
   char * room;
   int availability;
+  std::string line;
   if(infile.is_open()) {
     fprintf(stderr, "File open\n");
-    while (infile >> room >> availability)
+    while(!infile.eof())
     {
-      fprintf(stderr, "room: %s availability: %d\n", room, availability);
+      std::getline(infile, line);
+      std::cout << line;
+      /*fprintf(stderr, "room: %s availability: %d\n", room, availability);
       if(availability == 1) {
         DrawOnCanvas(canvas, rooms.at(room), images.at(room));
       } else {
         BlankScreen(canvas, rooms.at(room));
-      }
+      }*/
     }
     infile.close();
   } else {
