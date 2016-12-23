@@ -133,14 +133,14 @@ int main(int argc, char *argv[]) {
   signal(SIGTERM, InterruptHandler);
   signal(SIGINT, InterruptHandler);
 
-  fprintf(stderr, "loading images...");
+  fprintf(stderr, "loading images...\n");
   std::unordered_map<std::string,Image *> images = {
         { "eve", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve.ppm") },
         { "optimus", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus.ppm") },
         { "walle", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle.ppm") },
         { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm") }
   };
-  fprintf(stderr, "creating room to panel map");
+  fprintf(stderr, "creating room to panel map\n");
   std::unordered_map<std::string,int> rooms = {
         { "eve", PANEL1 },
         { "optimus", PANEL2 },
@@ -148,15 +148,15 @@ int main(int argc, char *argv[]) {
         { "bender", PANEL4 }
   };
 
-  fprintf(stderr, "Opening file");
+  fprintf(stderr, "Opening file\n");
   std::ifstream infile ("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
   char * room;
   int availability;
   if(infile.is_open()) {
-    fprintf(stderr, "File open");
+    fprintf(stderr, "File open\n");
     while (infile >> room >> availability)
     {
-      printf("room: %s availability: %d", room, availability);
+      fprintf(stderr, "room: %s availability: %d\n", room, availability);
       if(availability == 1) {
         DrawOnCanvas(canvas, rooms.at(room), images.at(room));
       } else {
@@ -165,7 +165,7 @@ int main(int argc, char *argv[]) {
     }
     infile.close();
   } else {
-    fprintf(stderr, "File not open");
+    fprintf(stderr, "File not open\n");
   }
   sleep(10);
 
