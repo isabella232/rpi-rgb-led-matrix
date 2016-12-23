@@ -124,7 +124,8 @@ int main(int argc, char *argv[]) {
   defaults.rows = 16;
   defaults.chain_length = 4;
   defaults.parallel = 1;
-  defaults.show_refresh_rate = true;
+  defaults.show_refresh_rate = false;
+  defaults.brightness = 60;
   Canvas *canvas = rgb_matrix::CreateMatrixFromFlags(&argc, &argv, &defaults);
   if (canvas == NULL)
     return 1;
@@ -135,25 +136,23 @@ int main(int argc, char *argv[]) {
   signal(SIGTERM, InterruptHandler);
   signal(SIGINT, InterruptHandler);
 
-  fprintf(stderr, "loading images...\n");
   std::unordered_map<std::string,Image *> images = {
-        { "eve", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve.ppm") },
-        { "optimus", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus.ppm") },
-        { "walle", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle.ppm") },
-        { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm") }
+    { "eve", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve.ppm") },
+    { "optimus", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus.ppm") },
+    { "walle", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle.ppm") },
+    { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm") }
   };
-  fprintf(stderr, "creating room to panel map\n");
   std::unordered_map<std::string,int> panels = {
-        { "eve", PANEL1 },
-        { "optimus", PANEL2 },
-        { "walle", PANEL3 },
-        { "bender", PANEL4 }
+    { "eve", PANEL1 },
+    { "optimus", PANEL2 },
+    { "walle", PANEL3 },
+    { "bender", PANEL4 }
   };
   std::unordered_map<std::string,int> availability = {
-        { "eve", NULL },
-        { "optimus", NULL },
-        { "walle", NULL },
-        { "bender", NULL }
+    { "eve", NULL },
+    { "optimus", NULL },
+    { "walle", NULL },
+    { "bender", NULL }
   };
 
   std::ifstream infile;
@@ -162,10 +161,8 @@ int main(int argc, char *argv[]) {
   std::string line;
 
   while(true) {
-    fprintf(stderr, "Opening file\n");
     infile.open("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
     if(infile.is_open()) {
-      fprintf(stderr, "File open\n");
       while(infile >> room >> current_availability)
       {
         std::cout << room << current_availability << std::endl;
@@ -179,8 +176,6 @@ int main(int argc, char *argv[]) {
         availability[room] = current_availability;
       }
       infile.close();
-    } else {
-      fprintf(stderr, "File not open\n");
     }
     sleep(30);
   }
