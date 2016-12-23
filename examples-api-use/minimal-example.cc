@@ -63,8 +63,8 @@ int main(int argc, char *argv[]) {
   DrawOnCanvas(canvas);    // Using the canvas.
 
   // Animation finished. Shut down the RGB matrix.
-  canvas->Clear();
-  delete canvas;
+  //canvas->Clear();
+  //delete canvas;
 
   return 0;
 }
