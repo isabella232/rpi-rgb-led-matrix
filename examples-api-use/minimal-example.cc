@@ -100,7 +100,6 @@ Image * LoadPPM(const char *filename) {
 }
 
 static void DrawOnCanvas(Canvas *canvas, int start_position, Image * image) {
-  std::cout << "Drawing on panel " << start_position << std::endl;
   for (int x = 0; x < image->width; ++x) {
     for (int y = 0; y < image->height; ++y) {
       const Pixel &p = image->getPixel(x, y);
@@ -110,7 +109,6 @@ static void DrawOnCanvas(Canvas *canvas, int start_position, Image * image) {
 }
 
 static void BlankScreen(Canvas *canvas, int start_position) {
-  std::cout << "Blanking panel " << start_position << std::endl;
   for (int x = 0; x < 32; ++x) {
     for (int y = 0; y < 16; ++y) {
       canvas->SetPixel(x + start_position, y, 0, 0, 0);
@@ -165,7 +163,6 @@ int main(int argc, char *argv[]) {
     if(infile.is_open()) {
       while(infile >> room >> current_availability)
       {
-        std::cout << room << current_availability << std::endl;
         if(current_availability != availability[room]) {
           if(current_availability == 1) {
             DrawOnCanvas(canvas, panels[room], images[room]);
