@@ -143,16 +143,22 @@ int main(int argc, char *argv[]) {
         { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm") }
   };
   fprintf(stderr, "creating room to panel map\n");
-  std::unordered_map<std::string,int> rooms = {
+  std::unordered_map<std::string,int> panels = {
         { "eve", PANEL1 },
         { "optimus", PANEL2 },
         { "walle", PANEL3 },
         { "bender", PANEL4 }
   };
+  std::unordered_map<std::string,int> availability = {
+        { "eve", NULL },
+        { "optimus", NULL },
+        { "walle", NULL },
+        { "bender", NULL }
+  };
 
   std::ifstream infile;
   std::string room;
-  int availability;
+  int current_availability;
   std::string line;
 
   while(true) {
@@ -160,14 +166,17 @@ int main(int argc, char *argv[]) {
     infile.open("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
     if(infile.is_open()) {
       fprintf(stderr, "File open\n");
-      while(infile >> room >> availability)
+      while(infile >> room >> current_availability)
       {
-        std::cout << room << availability << std::endl;
-        if(availability == 1) {
-          DrawOnCanvas(canvas, rooms.at(room), images.at(room));
-        } else {
-          BlankScreen(canvas, rooms.at(room));
+        std::cout << room << current_availability << std::endl;
+        if(current_availability != availability[room]) {
+          if(current_availability == 1) {
+            DrawOnCanvas(canvas, panels[room], images[room]);
+          } else {
+            BlankScreen(canvas, panels[room]);
+          }
         }
+        availability[room] = current_availability;
       }
       infile.close();
     } else {
