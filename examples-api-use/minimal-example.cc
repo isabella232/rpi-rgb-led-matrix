@@ -6,15 +6,23 @@
 // (but note, that the led-matrix library this depends on is GPL v2)
 
 #include "led-matrix.h"
-
+#include <iostream>
+#include <fstream>
 #include <unistd.h>
 #include <math.h>
 #include <stdio.h>
 #include <signal.h>
+#include <string>
+#include <unordered_map>
 
 using rgb_matrix::GPIO;
 using rgb_matrix::RGBMatrix;
 using rgb_matrix::Canvas;
+
+#define PANEL1 0
+#define PANEL2 33
+#define PANEL3 65
+#define PANEL4 97
 
 volatile bool interrupt_received = false;
 static void InterruptHandler(int signo) {
@@ -91,18 +99,19 @@ Image * LoadPPM(const char *filename) {
   return image;
 }
 
-static void DrawOnCanvas(Canvas *canvas, int start_position, const char *filename) {
-  /*
-   * Let's create a simple animation. We use the canvas to draw
-   * pixels. We wait between each step to have a slower animation.
-   */
-  Image * image = LoadPPM(filename);
-
+static void DrawOnCanvas(Canvas *canvas, int start_position, Image * image) {
   for (int x = 0; x < image->width; ++x) {
     for (int y = 0; y < image->height; ++y) {
       const Pixel &p = image->getPixel(x, y);
-      printf("Setting pixel %d, %d to %d %d %d", x + start_position, y, p.red, p.green, p.blue);
       canvas->SetPixel(x + start_position, y, p.red, p.green, p.blue);
+    }
+  }
+}
+
+static void BlankScreen(Canvas *canvas, int start_position) {
+  for (int x = 0; x < 32; ++x) {
+    for (int y = 0; y < 16; ++y) {
+      canvas->SetPixel(x + start_position, y, 0, 0, 0);
     }
   }
 }
@@ -124,11 +133,31 @@ int main(int argc, char *argv[]) {
   signal(SIGTERM, InterruptHandler);
   signal(SIGINT, InterruptHandler);
 
-  DrawOnCanvas(canvas, 0, "/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve.ppm");
-  DrawOnCanvas(canvas, 33, "/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus.ppm");
-  DrawOnCanvas(canvas, 65, "/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle.ppm");
-  DrawOnCanvas(canvas, 97, "/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm");
-  sleep(5);
+  std::unordered_map<std::string,Image *> images = {
+        { "eve", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve.ppm") },
+        { "optimus", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus.ppm") },
+        { "walle", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle.ppm") },
+        { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm") }
+  };
+  std::unordered_map<std::string,int> rooms = {
+        { "eve", PANEL1 },
+        { "optimus", PANEL2 },
+        { "walle", PANEL3 },
+        { "bender", PANEL4 }
+  };
+
+  std::ifstream infile("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
+  char * room;
+  int availability;
+  while (infile >> room >> availability)
+  {
+    if(availability == 1) {
+      DrawOnCanvas(canvas, rooms.at(room), images.at(room));
+    } else {
+      BlankScreen(canvas, rooms.at(room));
+    }
+  }
+  sleep(10);
 
   // Animation finished. Shut down the RGB matrix.
   canvas->Clear();
