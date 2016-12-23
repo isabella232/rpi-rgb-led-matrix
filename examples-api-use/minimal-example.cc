@@ -150,28 +150,31 @@ int main(int argc, char *argv[]) {
         { "bender", PANEL4 }
   };
 
-  fprintf(stderr, "Opening file\n");
   std::ifstream infile;
-  infile.open("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
   std::string room;
   int availability;
   std::string line;
-  if(infile.is_open()) {
-    fprintf(stderr, "File open\n");
-    while(infile >> room >> availability)
-    {
-      std::cout << room << availability << std::endl;
-      if(availability == 1) {
-        DrawOnCanvas(canvas, rooms.at(room), images.at(room));
-      } else {
-        BlankScreen(canvas, rooms.at(room));
+
+  while(true) {
+    fprintf(stderr, "Opening file\n");
+    infile.open("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
+    if(infile.is_open()) {
+      fprintf(stderr, "File open\n");
+      while(infile >> room >> availability)
+      {
+        std::cout << room << availability << std::endl;
+        if(availability == 1) {
+          DrawOnCanvas(canvas, rooms.at(room), images.at(room));
+        } else {
+          BlankScreen(canvas, rooms.at(room));
+        }
       }
+      infile.close();
+    } else {
+      fprintf(stderr, "File not open\n");
     }
-    infile.close();
-  } else {
-    fprintf(stderr, "File not open\n");
+    sleep(30);
   }
-  sleep(10);
 
   // Animation finished. Shut down the RGB matrix.
   canvas->Clear();
