@@ -146,17 +146,22 @@ int main(int argc, char *argv[]) {
         { "bender", PANEL4 }
   };
 
-  std::ifstream infile("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
+  std::ifstream infile ("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
   char * room;
   int availability;
-  while (infile >> room >> availability)
-  {
-    printf("room: %s availability: %d", room, availability);
-    if(availability == 1) {
-      DrawOnCanvas(canvas, rooms.at(room), images.at(room));
-    } else {
-      BlankScreen(canvas, rooms.at(room));
+  if(infile.is_open()) {
+    while (infile >> room >> availability)
+    {
+      printf("room: %s availability: %d", room, availability);
+      if(availability == 1) {
+        DrawOnCanvas(canvas, rooms.at(room), images.at(room));
+      } else {
+        BlankScreen(canvas, rooms.at(room));
+      }
     }
+    infile.close();
+  } else {
+    std::cout << "File not open";
   }
   sleep(10);
 
