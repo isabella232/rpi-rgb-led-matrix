@@ -96,13 +96,12 @@ static void DrawOnCanvas(Canvas *canvas, int start_position, const char *filenam
    * Let's create a simple animation. We use the canvas to draw
    * pixels. We wait between each step to have a slower animation.
    */
-  canvas->Fill(0, 0, 255);
-
   Image * image = LoadPPM(filename);
 
   for (int x = 0; x < image->width; ++x) {
     for (int y = 0; y < image->height; ++y) {
       const Pixel &p = image->getPixel(x, y);
+      printf("Setting pixel %d, %d to %d %d %d", x + start_position, y, p.red, p.green, p.blue);
       canvas->SetPixel(x + start_position, y, p.red, p.green, p.blue);
     }
   }
