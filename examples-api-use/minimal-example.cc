@@ -100,6 +100,7 @@ Image * LoadPPM(const char *filename) {
 }
 
 static void DrawOnCanvas(Canvas *canvas, int start_position, Image * image) {
+  std::cout << "Drawing on panel " << start_position << std::endl;
   for (int x = 0; x < image->width; ++x) {
     for (int y = 0; y < image->height; ++y) {
       const Pixel &p = image->getPixel(x, y);
@@ -109,6 +110,7 @@ static void DrawOnCanvas(Canvas *canvas, int start_position, Image * image) {
 }
 
 static void BlankScreen(Canvas *canvas, int start_position) {
+  std::cout << "Blanking panel " << start_position << std::endl;
   for (int x = 0; x < 32; ++x) {
     for (int y = 0; y < 16; ++y) {
       canvas->SetPixel(x + start_position, y, 0, 0, 0);
@@ -119,8 +121,8 @@ static void BlankScreen(Canvas *canvas, int start_position) {
 int main(int argc, char *argv[]) {
   RGBMatrix::Options defaults;
   defaults.hardware_mapping = "regular";  // or e.g. "adafruit-hat"
-  defaults.rows = 32;
-  defaults.chain_length = 1;
+  defaults.rows = 16;
+  defaults.chain_length = 4;
   defaults.parallel = 1;
   defaults.show_refresh_rate = true;
   Canvas *canvas = rgb_matrix::CreateMatrixFromFlags(&argc, &argv, &defaults);
@@ -159,12 +161,11 @@ int main(int argc, char *argv[]) {
     while(infile >> room >> availability)
     {
       std::cout << room << availability << std::endl;
-      /*fprintf(stderr, "room: %s availability: %d\n", room, availability);
       if(availability == 1) {
         DrawOnCanvas(canvas, rooms.at(room), images.at(room));
       } else {
         BlankScreen(canvas, rooms.at(room));
-      }*/
+      }
     }
     infile.close();
   } else {
