@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
     while(!infile.eof())
     {
       std::getline(infile, line);
-      std::cout << line;
+      std::cout << line << std::endl;
       /*fprintf(stderr, "room: %s availability: %d\n", room, availability);
       if(availability == 1) {
         DrawOnCanvas(canvas, rooms.at(room), images.at(room));
