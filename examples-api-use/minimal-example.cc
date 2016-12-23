@@ -151,6 +151,7 @@ int main(int argc, char *argv[]) {
   int availability;
   while (infile >> room >> availability)
   {
+    printf("room: %s availability: %d", room, availability);
     if(availability == 1) {
       DrawOnCanvas(canvas, rooms.at(room), images.at(room));
     } else {
