@@ -1,4 +1,4 @@
-CFLAGS=-Wall -O3 -g
+CFLAGS=-Wall -O3 -g -std=c++11
 CXXFLAGS=$(CFLAGS)
 OBJECTS=demo-main.o minimal-example.o c-example.o text-example.o
 BINARIES=demo minimal-example c-example text-example
