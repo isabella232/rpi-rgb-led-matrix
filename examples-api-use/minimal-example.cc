@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
   char * room;
   int availability;
   if(infile.is_open()) {
-    std::cout << "File open";
+    printf("File open");
     while (infile >> room >> availability)
     {
       printf("room: %s availability: %d", room, availability);
@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
     }
     infile.close();
   } else {
-    std::cout << "File not open";
+    printf("File not open");
   }
   sleep(10);
 
