@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
   std::string line;
 
   while(true) {
-    infile.open("/home/pi/tb/conference-room-crystal/availabilities");
+    infile.open("/home/pi/availabilities");
     if(infile.is_open()) {
       while(infile >> room >> current_availability)
       {
