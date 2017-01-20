@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
     { "walle", PANEL3 },
     { "bender", PANEL4 }
   };
-  std::unordered_map<std::string,int> availability = {
+  std::unordered_map<std::string,std::string> availability = {
     { "eve", NULL },
     { "optimus", NULL },
     { "walle", NULL },
@@ -155,16 +155,16 @@ int main(int argc, char *argv[]) {
 
   std::ifstream infile;
   std::string room;
-  int current_availability;
+  std::string current_availability;
   std::string line;
 
   while(true) {
-    infile.open("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/availability");
+    infile.open("/home/pi/tb/conference-room-crystal/availabilities");
     if(infile.is_open()) {
       while(infile >> room >> current_availability)
       {
         if(current_availability != availability[room]) {
-          if(current_availability == 1) {
+          if(current_availability == "available") {
             DrawOnCanvas(canvas, panels[room], images[room]);
           } else {
             BlankScreen(canvas, panels[room]);
