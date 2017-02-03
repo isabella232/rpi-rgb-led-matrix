@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
     { "walle", PANEL3 },
     { "bender", PANEL4 }
   };
-  std::unordered_map<std::string,std::string> availability = {
+  std::unordered_map<std::string,int> availability = {
     { "eve", NULL },
     { "optimus", NULL },
     { "walle", NULL },
@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
 
   std::ifstream infile;
   std::string room;
-  std::string current_availability;
+  int current_availability;
   std::string line;
 
   while(true) {
@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
       while(infile >> room >> current_availability)
       {
         if(current_availability != availability[room]) {
-          if(current_availability == "available") {
+          if(current_availability == 1) {
             DrawOnCanvas(canvas, panels[room], images[room]);
           } else {
             BlankScreen(canvas, panels[room]);
