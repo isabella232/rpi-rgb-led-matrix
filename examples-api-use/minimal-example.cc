@@ -152,16 +152,23 @@ int main(int argc, char *argv[]) {
     { "walle", NULL },
     { "bender", NULL }
   };
+  std::unordered_map<std::string,int> minutes_until_state_change = {
+    { "eve", NULL },
+    { "optimus", NULL },
+    { "walle", NULL },
+    { "bender", NULL }
+  };
 
   std::ifstream infile;
   std::string room;
   int current_availability;
+  int minutes;
   std::string line;
 
   while(true) {
     infile.open("/home/pi/availabilities");
     if(infile.is_open()) {
-      while(infile >> room >> current_availability)
+      while(infile >> room >> current_availability >> minutes)
       {
         if(current_availability != availability[room]) {
           if(current_availability == 1) {
