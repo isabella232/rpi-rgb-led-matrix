@@ -134,11 +134,17 @@ int main(int argc, char *argv[]) {
   signal(SIGTERM, InterruptHandler);
   signal(SIGINT, InterruptHandler);
 
-  std::unordered_map<std::string,Image *> images = {
+  std::unordered_map<std::string,Image *> available_images = {
     { "eve", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve.ppm") },
     { "optimus", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus.ppm") },
     { "walle", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle.ppm") },
     { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender.ppm") }
+  };
+  std::unordered_map<std::string,Image *> busy_images = {
+    { "eve", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/eve-busy.ppm") },
+    { "optimus", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/optimus-busy.ppm") },
+    { "walle", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/walle-busy.ppm") },
+    { "bender", LoadPPM("/home/pi/tb/rpi-rgb-led-matrix/examples-api-use/images/bender-busy.ppm") }
   };
   std::unordered_map<std::string,int> panels = {
     { "eve", PANEL1 },
@@ -169,12 +175,13 @@ int main(int argc, char *argv[]) {
     infile.open("/home/pi/availabilities");
     if(infile.is_open()) {
       while(infile >> room >> current_availability >> minutes)
+      minutes_until_state_change[room] = minutes;
       {
         if(current_availability != availability[room]) {
           if(current_availability == 1) {
-            DrawOnCanvas(canvas, panels[room], images[room]);
+            DrawOnCanvas(canvas, panels[room], available_images[room]);
           } else {
-            BlankScreen(canvas, panels[room]);
+            DrawOnCanvas(canvas, panels[room], busy_images[room]);
           }
         }
         availability[room] = current_availability;
