@@ -175,8 +175,9 @@ int main(int argc, char *argv[]) {
     infile.open("/home/pi/availabilities");
     if(infile.is_open()) {
       while(infile >> room >> current_availability >> minutes)
-      minutes_until_state_change[room] = minutes;
       {
+        minutes_until_state_change[room] = minutes;
+
         if(current_availability != availability[room]) {
           if(current_availability == 1) {
             DrawOnCanvas(canvas, panels[room], available_images[room]);
