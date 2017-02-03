@@ -178,15 +178,11 @@ int main(int argc, char *argv[]) {
       {
         minutes_until_state_change[room] = minutes;
 
-        if(current_availability != availability[room]) {
-          if(current_availability == 1) {
-            DrawOnCanvas(canvas, panels[room], available_images[room]);
-          } else {
-            DrawOnCanvas(canvas, panels[room], available_images[room]);
-            DrawOnCanvas(canvas, panels[room], busy_images[room]);
-          }
+        if(current_availability == 1) {
+          DrawOnCanvas(canvas, panels[room], available_images[room]);
+        } else {
+          DrawOnCanvas(canvas, panels[room], busy_images[room]);
         }
-        availability[room] = current_availability;
       }
       infile.close();
     }
