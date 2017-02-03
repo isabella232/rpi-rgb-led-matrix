@@ -182,6 +182,7 @@ int main(int argc, char *argv[]) {
           if(current_availability == 1) {
             DrawOnCanvas(canvas, panels[room], available_images[room]);
           } else {
+            DrawOnCanvas(canvas, panels[room], available_images[room]);
             DrawOnCanvas(canvas, panels[room], busy_images[room]);
           }
         }
